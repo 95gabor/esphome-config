@@ -1,0 +1,12 @@
+**
+
+!config
+!config/*.yaml
+config/.esphome
+config/secrets.yaml
+
+!.gitignore
+!.pre-commit-config.yaml
+!.yamlfix.toml
+!docker-compose.yaml
+!README.md

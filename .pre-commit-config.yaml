@@ -1,0 +1,11 @@
+repos:
+  - repo: https://github.com/lyz-code/yamlfix
+    rev: 1.19.1
+    hooks:
+      - id: yamlfix
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
