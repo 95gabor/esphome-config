@@ -2,6 +2,7 @@
 
 !config
 !config/*.yaml
+!config/www3TZB.js
 config/.esphome
 config/configs
 
