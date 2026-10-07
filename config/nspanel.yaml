@@ -1,0 +1,30 @@
+substitutions:
+  # Settings - Editable values
+  device_name: "bathroom-switch"
+  friendly_name: "Bathroom switch"
+  wifi_ssid: !secret wifi_ssid
+  wifi_password: !secret wifi_password
+  ota_password: "" # Optional: set OTA password, or use ${wifi_password} for backward compatibility (see migration guide)
+  language: en  # Language code - see docs/localization.md for all supported codes
+  boot_sound: false
+  # Add-on configuration (if needed)
+  ## Upload TFT
+  upload_tft_automatically: true
+  ## Climate add-on
+  # heater_relay: "1"  # Possible values: "1" or "2"
+
+# Customization area
+##### My customization - Start  #####
+web_server:
+  port: 80
+
+##### My customization - End  #####
+
+# Core and optional configurations
+packages:
+  remote_package:
+    url: https://github.com/edwardtfn/NSPanel-Easy
+    ref: latest
+    refresh: 300s
+    files:
+      - nspanel_esphome.yaml
