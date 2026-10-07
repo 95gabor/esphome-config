@@ -16,5 +16,7 @@ config/configs
 !.claude/**
 !.github
 !.github/**
+!scripts
+!scripts/**
 
 **/secrets.yaml

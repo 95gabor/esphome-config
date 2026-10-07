@@ -8,7 +8,8 @@ ESPHome device configs run via Docker Compose (`docker-compose.yaml`, dashboard 
 - Configs live in `config/`; build artifacts in `config/.esphome` and `config/configs` are gitignored.
 - `.gitignore` is a whitelist (`**` ignored). New tracked files must be explicitly un-ignored there.
 - YAML is formatted by `yamlfix` (pre-commit). Run `pre-commit run --all-files` before committing.
-- The `docker-compose.yaml` image is pinned by tag and digest; bump both together.
+- The `docker-compose.yaml` image is pinned by tag and digest; bump both together, preferably with `scripts/update-esphome-image.sh` (multi-arch digest).
+- Keep workflow logic in `scripts/` (runnable manually), not in large inline `run:` blocks.
 
 ## File naming
 

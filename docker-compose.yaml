@@ -1,7 +1,7 @@
 services:
   esphome:
     container_name: esphome
-    image: ghcr.io/esphome/esphome:2026.9.1@sha256:47d3a747b958eb798a9d246726e1526d4143fb85ba864e13c5558e4f067bdcfe
+    image: ghcr.io/esphome/esphome:2026.9.1@sha256:776a845d508909bf426d2ee7bdd81796361ebe6a7f091807ce1d6d0b48985413
     privileged: true
     volumes:
       - ./config:/config

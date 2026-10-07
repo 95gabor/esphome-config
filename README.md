@@ -54,3 +54,7 @@ pre-commit install -t pre-commit -t commit-msg
 ```
 
 The same checks run in CI (`.github/workflows/ci.yaml`) via `pre-commit/action` on every push to `main` and on pull requests targeting `main`.
+
+## Image updates
+
+`scripts/update-esphome-image.sh` pins the `docker-compose.yaml` image to the latest stable ESPHome release tag plus its multi-arch digest (`--dry-run` to preview). The `update-esphome-image` workflow runs it daily and opens a PR; you can also run it manually.

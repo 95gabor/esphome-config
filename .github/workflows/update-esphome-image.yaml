@@ -1,0 +1,45 @@
+name: Update ESPHome image
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * *"
+      timezone: Europe/Budapest
+
+jobs:
+  update-image:
+    runs-on: ubuntu-24.04
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+
+      - name: Update docker-compose.yaml
+        run: scripts/update-esphome-image.sh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run pre-commit hooks
+        run: |
+          pip install pre-commit
+          pre-commit run --all-files || pre-commit run --all-files
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8
+        if: github.ref == 'refs/heads/main'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "chore(docker): bump esphome image to ${{ env.stable_tag }}"
+          body: "Automatically updated ESPHome image to `${{ env.stable_tag }}` (multi-arch\
+            \ digest `${{ env.stable_digest }}`)"
+          commit-message: "chore(docker): bump esphome image to ${{ env.stable_tag }}"
+          branch: bump/esphome
+          sign-commits: true
