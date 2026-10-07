@@ -3,11 +3,18 @@
 !config
 !config/*.yaml
 config/.esphome
+config/configs
 
 !.gitignore
 !.pre-commit-config.yaml
 !.yamlfix.toml
 !docker-compose.yaml
 !README.md
+!CLAUDE.md
+!.claudeignore
+!.claude
+!.claude/**
+!.github
+!.github/**
 
 **/secrets.yaml

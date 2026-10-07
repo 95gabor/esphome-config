@@ -1,0 +1,5 @@
+# Secrets: never read into AI context (see also .claude/settings.json permissions.deny)
+**/secrets.yaml
+.env
+.env.*
+config/.esphome/

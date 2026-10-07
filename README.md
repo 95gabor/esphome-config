@@ -1,6 +1,6 @@
 # ESPHome
 
-ESPHome configs for Sonoff Basic switches (kitchen, WC). Each device exposes a relay, button, status LED, and a web UI on port 80.
+ESPHome configs for Sonoff Basic switches (kitchen, WC) and a bathroom switch. Each Sonoff device exposes a relay, button, status LED, and a web UI on port 80.
 
 Docs: [esphome.io](https://esphome.io/)
 
@@ -19,17 +19,31 @@ wifi_password: "your-password"
 # secure_device_web_password: "..."
 ```
 
-Configs live in `config/`. Compose uses host networking on the pinned `ghcr.io/esphome/esphome:2026.7.2` image.
+Configs live in `config/`. Compose uses the pinned `ghcr.io/esphome/esphome` image (see `docker-compose.yaml`).
 
 ## Usage
 
+### Dashboard
+
 ```bash
-docker compose run --rm -it esphome logs kitchen.yaml
-docker compose run --rm -it esphome compile kitchen.yaml
-docker compose run --rm -it esphome upload kitchen.yaml
+docker compose up
 ```
 
-Same commands work with `wc.yaml`.
+Starts the ESPHome dashboard at <http://localhost:6052>. From the dashboard you can edit configs, validate, clean build files, compile, and upload via OTA or serial (the container runs `privileged` for USB access).
+
+#### Networking
+
+Host networking does not work on macOS/Windows (Docker Desktop runs containers in a VM), so Compose uses an explicit port mapping (`6052:6052`) instead. Without host networking the dashboard cannot use mDNS/mTLS-based device discovery and would show devices as offline, so `ESPHOME_DASHBOARD_USE_PING=true` is set. This makes the dashboard determine device status by ping and ignores the failed mTLS.
+
+### CLI
+
+```bash
+docker compose run --rm -it esphome logs kitchen-light.yaml
+docker compose run --rm -it esphome compile kitchen-light.yaml
+docker compose run --rm -it esphome upload kitchen-light.yaml
+```
+
+Same commands work with `wc-light.yaml` and `bathroom-switch.yaml`.
 
 ## Pre-commit
 
@@ -38,3 +52,5 @@ Hooks format YAML (`yamlfix`) and enforce [Conventional Commits](https://www.con
 ```bash
 pre-commit install -t pre-commit -t commit-msg
 ```
+
+The same checks run in CI (`.github/workflows/ci.yaml`) via `pre-commit/action` on every push to `main` and on pull requests targeting `main`.
