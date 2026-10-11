@@ -20,6 +20,11 @@ ota:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  power_save_mode: none
+
+  # Fallback hotspot if the WiFi connection fails
+  ap:
+    password: !secret wifi_password
 
 # Enable web server
 web_server:
@@ -42,8 +47,29 @@ binary_sensor:
       mode: INPUT_PULLUP
       inverted: true
     name: "Kitchen light button"
-    on_press:
-      - switch.toggle: relay
+    on_click:
+      # Short press: toggle the light
+      - min_length: 50ms
+        max_length: 1s
+        then:
+          - switch.toggle: relay
+      # Long press: restart the device
+      - min_length: 3s
+        max_length: 10s
+        then:
+          - button.press: restart_button
+
+sensor:
+  - platform: wifi_signal
+    name: "Kitchen light WiFi signal"
+    update_interval: 60s
+  - platform: uptime
+    name: "Kitchen light uptime"
+
+button:
+  - platform: restart
+    id: restart_button
+    name: "Kitchen light restart"
 
 status_led:
   pin:
